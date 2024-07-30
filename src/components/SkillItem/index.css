@@ -1,0 +1,11 @@
+.si-container {
+  display: flex;
+  width: 30%;
+  margin-bottom: 40px;
+}
+
+.skill-image {
+  margin-right: 15px;
+  height: 60px;
+  width: 60px;
+}

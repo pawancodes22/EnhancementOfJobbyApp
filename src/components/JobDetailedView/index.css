@@ -1,0 +1,82 @@
+.jd-page-bg {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.jd-main-bg {
+  background-color: black;
+  font-family: 'Roboto';
+  flex-grow: 1;
+  color: white;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.jd-sub-main-bg {
+  background-color: #202020;
+  padding: 40px;
+}
+
+.visit-link-style {
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50px;
+}
+
+.visit-icon-style {
+  font-size: 15px;
+}
+
+.heading-link-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.jd-heading {
+  margin: 5px;
+  font-size: 20px;
+}
+
+.skill-items-container {
+  padding: 0px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.margin-up {
+  margin-top: 40px;
+}
+
+.life-at-company-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.life-at-company-description {
+  width: 70%;
+  margin-right: 15px;
+  line-height: 1.5;
+}
+
+.similar-job-items-container {
+  display: flex;
+  flex-direction: row;
+  padding: 0px;
+}
+
+.jd-failure-view-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.similar-job-heading {
+  align-self: flex-start;
+}

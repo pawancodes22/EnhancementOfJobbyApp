@@ -1,0 +1,15 @@
+.similar-item-container {
+  width: 25%;
+  padding: 30px;
+  background-color: #202020;
+  border-radius: 10px;
+  margin-right: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+}
+
+.jd-space-occupy {
+  flex-grow: 1;
+}

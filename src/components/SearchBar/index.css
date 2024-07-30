@@ -1,0 +1,23 @@
+.search-box-container {
+  border-color: #6366f1;
+  display: flex;
+  width: 30%;
+  border-radius: 10px;
+}
+
+.search-input-job {
+  width: 100%;
+  padding: 10px;
+}
+
+.search-icon {
+  background-color: #2c364c;
+  color: white;
+  font-size: 15px;
+}
+
+.job-search-button {
+  background-color: #2c364c;
+  border-style: none;
+  padding: 10px;
+}
