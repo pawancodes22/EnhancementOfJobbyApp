@@ -19,17 +19,17 @@ const apiStatusConstants = {
 }
 
 const EmploymentOption = props => {
-  const {item, changeCheckboxInput} = props
+  const {item, changeEmploymentInput} = props
   const {label, employmentTypeId} = item
-  const onChangeCheckboxInput = event => {
-    changeCheckboxInput(event.target.checked, employmentTypeId)
+  const onchangeEmploymentInput = event => {
+    changeEmploymentInput(event.target.checked, employmentTypeId)
   }
   return (
     <li className="job-filter-container">
       <input
         type="checkbox"
         id={employmentTypeId}
-        onChange={onChangeCheckboxInput}
+        onChange={onchangeEmploymentInput}
       />
       <label htmlFor={employmentTypeId}>{label}</label>
     </li>
@@ -56,6 +56,20 @@ const SalaryOption = props => {
   )
 }
 
+const LocationOption = props => {
+  const {item, changeEmploymentInput} = props
+  const {label, locationId} = item
+  const onchangeLocation = event => {
+    changeEmploymentInput(event.target.checked, locationId)
+  }
+  return (
+    <li className="job-location-container">
+      <input type="checkbox" id={locationId} onChange={onchangeLocation} />
+      <label htmlFor={locationId}>{label}</label>
+    </li>
+  )
+}
+
 const employmentTypesList = [
   {
     label: 'Full Time',
@@ -73,6 +87,14 @@ const employmentTypesList = [
     label: 'Internship',
     employmentTypeId: 'INTERNSHIP',
   },
+]
+
+const locationsList = [
+  {label: 'Hyderabad', locationId: 'Hyderabad'},
+  {label: 'Bangalore', locationId: 'Bangalore'},
+  {label: 'Chennai', locationId: 'Chennai'},
+  {label: 'Delhi', locationId: 'Delhi'},
+  {label: 'Mumbai', locationId: 'Mumbai'},
 ]
 
 const salaryRangesList = [
@@ -101,6 +123,7 @@ class Jobs extends Component {
     jobApiStatus: apiStatusConstants.pending,
     jobDetails: [],
     employmentType: [],
+    location: [],
     salaryRange: '',
     searchInput: '',
   }
@@ -118,9 +141,7 @@ class Jobs extends Component {
     this.setState({salaryRange: value}, this.fetchJobs)
   }
 
-  changeCheckboxInput = (checkValue, value) => {
-    const {employmentType} = this.state
-    console.log('checkboxInputCalled', checkValue, value, employmentType)
+  changeEmploymentInput = (checkValue, value) => {
     if (checkValue) {
       this.setState(
         prev => ({employmentType: [...prev.employmentType, value]}),
@@ -130,6 +151,22 @@ class Jobs extends Component {
       this.setState(
         prev => ({
           employmentType: prev.employmentType.filter(item => item !== value),
+        }),
+        this.fetchJobs,
+      )
+    }
+  }
+
+  changeLocationInput = (checkValue, value) => {
+    if (checkValue) {
+      this.setState(
+        prev => ({location: [...prev.location, value]}),
+        this.fetchJobs,
+      )
+    } else {
+      this.setState(
+        prev => ({
+          location: prev.location.filter(item => item !== value),
         }),
         this.fetchJobs,
       )
@@ -202,7 +239,7 @@ class Jobs extends Component {
 
   fetchJobs = async () => {
     this.setState({jobApiStatus: apiStatusConstants.pending})
-    const {employmentType, searchInput, salaryRange} = this.state
+    const {employmentType, searchInput, salaryRange, location} = this.state
     const employmentTypeString = employmentType.join(',')
     const jwtToken = Cookies.get('jwt_token')
     const options = {
@@ -224,8 +261,11 @@ class Jobs extends Component {
         rating: jobItems.rating,
         title: jobItems.title,
       }))
+      const filteredResponse = updatedResponse.filter(item =>
+        location.includes(item.location),
+      )
       this.setState({
-        jobDetails: updatedResponse,
+        jobDetails: location.length === 0 ? updatedResponse : filteredResponse,
         jobApiStatus: apiStatusConstants.success,
       })
     } else {
@@ -244,7 +284,7 @@ class Jobs extends Component {
             <EmploymentOption
               key={item.employmentTypeId}
               item={item}
-              changeCheckboxInput={this.changeCheckboxInput}
+              changeEmploymentInput={this.changeEmploymentInput}
             />
           ))}
         </ul>
@@ -258,6 +298,19 @@ class Jobs extends Component {
               key={item.salaryRangeId}
               item={item}
               changeRadioInput={this.changeRadioInput}
+            />
+          ))}
+        </ul>
+      </div>
+      <hr className="profile-hr" />
+      <div>
+        <h1 className="job-filter-heading">Job Location</h1>
+        <ul className="remove-padding">
+          {locationsList.map(item => (
+            <LocationOption
+              key={item.locationId}
+              item={item}
+              changeEmploymentInput={this.changeLocationInput}
             />
           ))}
         </ul>
@@ -332,7 +385,7 @@ class Jobs extends Component {
   }
 
   render() {
-    const {employmentType, salaryRange, searchInput} = this.state
+    const {location} = this.state
     return (
       <div className="job-page-bg">
         <Header />
